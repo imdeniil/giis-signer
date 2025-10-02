@@ -22,6 +22,7 @@
 - **ОС**: Windows (из-за зависимости от КриптоПро CSP)
 - **Python**: >= 3.8
 - **КриптоПро CSP**: Установлен и настроен
+- **КриптоПро ЭЦП Browser plug-in**: Установлен ([скачать](https://www.cryptopro.ru/products/cades/plugin))
 - **Сертификат**: ГОСТ Р 34.10-2012 (256 бит) в хранилище сертификатов Windows
 
 ### Python-зависимости
@@ -33,6 +34,8 @@
 ### 1. Установка КриптоПро CSP
 
 Скачайте и установите [КриптоПро CSP](https://www.cryptopro.ru/products/csp/downloads) с официального сайта.
+
+Также установите [КриптоПро ЭЦП Browser plug-in](https://www.cryptopro.ru/products/cades/plugin) для работы с COM-интерфейсом.
 
 ### 2. Установка Python и uv
 
