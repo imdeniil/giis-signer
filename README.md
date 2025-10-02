@@ -13,8 +13,36 @@
 - ✅ Интеграция с **КриптоПро CSP** через COM-интерфейс
 - ✅ Применение **Exclusive Canonicalization (ExcC14N)**
 - ✅ Поддержка **SMEV-трансформации** для государственных систем
-- ✅ Простой CLI-интерфейс
+- ✅ GUI и CLI интерфейсы
+- ✅ Standalone exe-файлы (без установки Python)
 - ✅ Готов к использованию в производстве
+
+## Безопасность
+
+### VirusTotal Анализ
+Standalone exe-файлы регулярно проверяются на VirusTotal для обеспечения безопасности:
+
+[![VirusTotal Scan](https://img.shields.io/badge/VirusTotal-Clean-success)](https://www.virustotal.com/gui/file-analysis/YzI4NTVhMTJjNGJmYTEwOTg4ZGM4NjY5M2RjMjRiZTI6MTc1OTQwMjg0Nw==)
+
+**Последний анализ:** GIIS-Signer-GUI.exe
+- **Результат:** 0/72 антивирусов обнаружили угрозы
+- **Детали:** [Просмотреть полный отчет](https://www.virustotal.com/gui/file-analysis/YzI4NTVhMTJjNGJmYTEwOTg4ZGM4NjY5M2RjMjRiZTI6MTc1OTQwMjg0Nw==)
+
+Exe-файлы созданы с помощью PyInstaller и содержат:
+- Весь код Python приложения
+- Необходимые библиотеки и зависимости
+- Python runtime
+
+⚠️ **Важно:** Exe-файлы НЕ содержат и НЕ хранят закрытые ключи. Все криптографические операции выполняются через КриптоПро CSP с использованием сертификатов из хранилища Windows.
+
+## Связанные библиотеки
+
+Проект использует следующие специализированные библиотеки для работы с ГОСТ криптографией:
+
+- **[xmlcanon](https://github.com/imdeniil/xmlcanon)** - Реализация Exclusive XML Canonicalization (ExcC14N) для Python
+- **[smev-transform](https://github.com/imdeniil/smev-transform)** - Реализация SMEV-трансформации для электронной подписи государственных документов
+
+Обе библиотеки разработаны специально для обеспечения совместимости с требованиями ГИИС ДМДК и других государственных информационных систем РФ.
 
 ## Требования
 
