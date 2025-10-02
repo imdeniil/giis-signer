@@ -20,17 +20,22 @@ from giis_signer.gui.config import Config
 from giis_signer.gui.toast import ToastManager
 
 
-def setup_logging():
-    """Настройка логирования в файл рядом с exe"""
-    # Определяем директорию исполняемого файла
-    if getattr(sys, 'frozen', False):
-        # Запущено как exe
-        app_dir = Path(sys.executable).parent
-    else:
-        # Запущено как скрипт
-        app_dir = Path(__file__).parent.parent.parent
+def get_log_file_path():
+    """Получить путь к файлу логов"""
+    # Используем AppData\Local\GIIS-Signer для логов
+    app_data = Path(os.getenv('LOCALAPPDATA', os.path.expanduser('~')))
+    log_dir = app_data / 'GIIS-Signer' / 'logs'
 
-    log_file = app_dir / f"giis-signer-gui_{datetime.now().strftime('%Y%m%d')}.log"
+    # Создаем директорию если не существует
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    log_file = log_dir / f"giis-signer-gui_{datetime.now().strftime('%Y%m%d')}.log"
+    return log_file
+
+
+def setup_logging():
+    """Настройка логирования в системную папку"""
+    log_file = get_log_file_path()
 
     # Настройка логирования
     logging.basicConfig(
@@ -117,6 +122,15 @@ class GIISSignerApp(ctk.CTk):
             font=ctk.CTkFont(size=24, weight="bold")
         )
         title_label.pack(side="left")
+
+        # Кнопка открытия лога
+        log_button = ctk.CTkButton(
+            header_frame,
+            text="📋 Открыть лог",
+            command=self._open_log,
+            width=120
+        )
+        log_button.pack(side="right", padx=5)
 
         # Кнопка настроек темы
         theme_button = ctk.CTkButton(
@@ -582,6 +596,24 @@ class GIISSignerApp(ctk.CTk):
             self.toast.error(f"Ошибка подписания: {str(e)}", duration=5000)
         except Exception as e:
             self.toast.error(f"Неожиданная ошибка: {str(e)}", duration=5000)
+
+    def _open_log(self):
+        """Открыть файл лога в блокноте"""
+        try:
+            log_file = get_log_file_path()
+            logger.info(f"Открытие лог-файла: {log_file}")
+
+            if not log_file.exists():
+                self.toast.warning("Лог-файл еще не создан")
+                return
+
+            # Открываем лог-файл в блокноте
+            os.startfile(str(log_file))
+            self.toast.info("Лог-файл открыт")
+
+        except Exception as e:
+            logger.error(f"Ошибка при открытии лог-файла: {e}", exc_info=True)
+            self.toast.error(f"Не удалось открыть лог: {str(e)}")
 
     def _toggle_theme(self):
         """Переключить тему оформления"""
