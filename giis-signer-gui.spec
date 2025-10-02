@@ -38,6 +38,7 @@ a = Analysis(
         'win32com.client',
         'win32api',
         'win32con',
+        'win32timezone',  # Необходим для работы с датами сертификатов
         'pywintypes',
         'pythoncom',
     ],
