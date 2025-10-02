@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="urn://xsd.dmdk.goznak.ru/exchange/3.0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:SendGetContractorRequest>
+        <ns:CallerSignature></ns:CallerSignature>
+        <ns:RequestData id="requestBody">
+           <ns:INN>1234567890</ns:INN>
+           <ns:OGRN>1234567890123</ns:OGRN>
+         </ns:RequestData>
+      </ns:SendGetContractorRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
