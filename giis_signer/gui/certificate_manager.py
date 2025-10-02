@@ -4,9 +4,12 @@
 """
 
 import win32com.client
+import logging
 from typing import List, Dict, Optional
 from dataclasses import dataclass
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -79,7 +82,10 @@ class CertificateManager:
         Raises:
             Exception: Если не удалось получить доступ к хранилищу
         """
+        logger.info(f"Запрос списка сертификатов (refresh={refresh})")
+
         if self._certificates_cache is not None and not refresh:
+            logger.info(f"Возврат кэшированных сертификатов: {len(self._certificates_cache)} шт.")
             return self._certificates_cache
 
         certificates_info = []
@@ -92,26 +98,36 @@ class CertificateManager:
 
             for store_name in ["CAdESCOM.Store", "CAPICOM.Store"]:
                 try:
+                    logger.debug(f"Попытка создать COM-объект: {store_name}")
                     store = win32com.client.Dispatch(store_name)
                     store_created = True
+                    logger.info(f"COM-объект успешно создан: {store_name}")
                     break
                 except Exception as e:
+                    logger.warning(f"Не удалось создать {store_name}: {e}")
                     last_error = e
                     continue
 
             if not store_created:
-                raise Exception(f"Не удалось создать COM-объект Store. Убедитесь, что установлен КриптоПро ЭЦП Browser plug-in. Ошибка: {last_error}")
+                error_msg = f"Не удалось создать COM-объект Store. Убедитесь, что установлен КриптоПро ЭЦП Browser plug-in. Ошибка: {last_error}"
+                logger.error(error_msg)
+                raise Exception(error_msg)
 
             # Открываем хранилище
+            logger.debug("Открытие хранилища сертификатов...")
             store.Open(
                 self.CAPICOM_CURRENT_USER_STORE,
                 self.CAPICOM_MY_STORE,
                 self.CAPICOM_STORE_OPEN_READ_ONLY
             )
+            logger.info("Хранилище сертификатов успешно открыто")
 
             certificates = store.Certificates
+            cert_count = certificates.Count if certificates else 0
+            logger.info(f"Найдено сертификатов в хранилище: {cert_count}")
 
             if certificates is None or certificates.Count == 0:
+                logger.warning("Хранилище сертификатов пусто")
                 # Возвращаем пустой список, но без ошибки
                 self._certificates_cache = []
                 return []
@@ -132,11 +148,16 @@ class CertificateManager:
                         is_valid=self._check_validity(cert)
                     )
                     certificates_info.append(cert_info)
+                    logger.debug(f"Сертификат #{i} обработан: {cert_info.subject_name}")
                 except Exception as e:
                     # Пропускаем сертификаты с ошибками, но не прерываем процесс
+                    logger.warning(f"Ошибка при обработке сертификата #{i}: {e}")
                     continue
 
+            logger.info(f"Успешно обработано сертификатов: {len(certificates_info)}")
+
         except Exception as e:
+            logger.error(f"Ошибка при доступе к хранилищу сертификатов: {e}", exc_info=True)
             raise Exception(f"Не удалось получить доступ к хранилищу сертификатов: {e}")
 
         finally:

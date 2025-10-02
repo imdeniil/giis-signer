@@ -30,9 +30,10 @@ MANIFEST
 # PyInstaller
 *.manifest
 *.spec
-# Except our build specs
+# Except our build specs and manifests
 !giis-signer-gui.spec
 !giis-signer-cli.spec
+!giis-signer-gui.manifest
 
 # Installer logs
 pip-log.txt

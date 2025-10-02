@@ -5,9 +5,12 @@
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
 import os
+import sys
 import re
+import logging
 from pathlib import Path
 from typing import Optional
+from datetime import datetime
 
 from giis_signer.cryptopro_signer import CryptoProSigner, CryptoProException
 from giis_signer.xml_signer import XMLSigner, XMLSignerException
@@ -15,6 +18,43 @@ from giis_signer.gui.certificate_manager import CertificateManager, CertificateI
 from giis_signer.gui.certificate_dialog import CertificateDialog
 from giis_signer.gui.config import Config
 from giis_signer.gui.toast import ToastManager
+
+
+def setup_logging():
+    """Настройка логирования в файл рядом с exe"""
+    # Определяем директорию исполняемого файла
+    if getattr(sys, 'frozen', False):
+        # Запущено как exe
+        app_dir = Path(sys.executable).parent
+    else:
+        # Запущено как скрипт
+        app_dir = Path(__file__).parent.parent.parent
+
+    log_file = app_dir / f"giis-signer-gui_{datetime.now().strftime('%Y%m%d')}.log"
+
+    # Настройка логирования
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_file, encoding='utf-8'),
+            logging.StreamHandler(sys.stdout)
+        ]
+    )
+
+    logger = logging.getLogger(__name__)
+    logger.info("="*60)
+    logger.info("GIIS Signer GUI запущен")
+    logger.info(f"Версия Python: {sys.version}")
+    logger.info(f"Исполняемый файл: {sys.executable}")
+    logger.info(f"Лог файл: {log_file}")
+    logger.info("="*60)
+
+    return logger
+
+
+# Настраиваем логирование при импорте модуля
+logger = setup_logging()
 
 
 class GIISSignerApp(ctk.CTk):
@@ -25,17 +65,25 @@ class GIISSignerApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        logger.info("Инициализация GUI приложения")
+
         # Инициализация менеджеров
         self.config = Config()
+        logger.info("Config менеджер инициализирован")
+
         self.certificate_manager = CertificateManager()
+        logger.info("Certificate менеджер инициализирован")
+
         self.selected_certificate: Optional[CertificateInfo] = None
 
         # Настройка окна
         self.title("GIIS DМДК XML Signer")
         self.geometry("1000x700")
+        logger.info("Окно приложения создано")
 
         # Инициализация toast-менеджера (после создания окна)
         self.toast = ToastManager(self)
+        logger.info("Toast менеджер инициализирован")
 
         # Восстанавливаем геометрию окна если была сохранена
         saved_geometry = self.config.get_window_geometry()

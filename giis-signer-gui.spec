@@ -75,4 +75,7 @@ exe = EXE(
     entitlements_file=None,
     icon=None,  # Можно добавить иконку позже
     version_file=None,
+    uac_admin=True,  # Требовать права администратора
+    uac_uiaccess=False,
+    manifest='giis-signer-gui.manifest',  # Использовать кастомный манифест
 )
