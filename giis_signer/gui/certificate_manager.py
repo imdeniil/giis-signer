@@ -86,11 +86,21 @@ class CertificateManager:
         store = None
 
         try:
-            # Пробуем создать Store
-            try:
-                store = win32com.client.Dispatch("CAdESCOM.Store")
-            except:
-                store = win32com.client.Dispatch("CAPICOM.Store")
+            # Пробуем создать Store - сначала CAdESCOM, потом CAPICOM
+            store_created = False
+            last_error = None
+
+            for store_name in ["CAdESCOM.Store", "CAPICOM.Store"]:
+                try:
+                    store = win32com.client.Dispatch(store_name)
+                    store_created = True
+                    break
+                except Exception as e:
+                    last_error = e
+                    continue
+
+            if not store_created:
+                raise Exception(f"Не удалось создать COM-объект Store. Убедитесь, что установлен КриптоПро ЭЦП Browser plug-in. Ошибка: {last_error}")
 
             # Открываем хранилище
             store.Open(
@@ -100,6 +110,11 @@ class CertificateManager:
             )
 
             certificates = store.Certificates
+
+            if certificates is None or certificates.Count == 0:
+                # Возвращаем пустой список, но без ошибки
+                self._certificates_cache = []
+                return []
 
             # Перебираем все сертификаты
             for i in range(1, certificates.Count + 1):
@@ -118,8 +133,7 @@ class CertificateManager:
                     )
                     certificates_info.append(cert_info)
                 except Exception as e:
-                    # Пропускаем сертификаты с ошибками
-                    print(f"Ошибка при обработке сертификата: {e}")
+                    # Пропускаем сертификаты с ошибками, но не прерываем процесс
                     continue
 
         except Exception as e:
