@@ -280,17 +280,35 @@ giis-signer/
 │   ├── cryptopro_signer.py    # Интеграция с КриптоПро CSP
 │   ├── xml_signer.py          # Формирование XMLDSig подписи
 │   ├── diagnostics.py         # Утилиты диагностики
-│   ├── exc_c14n_module/       # ExcC14N каноникализация
-│   └── smev_transform/        # SMEV трансформация
+│   └── gui/                   # GUI приложение
+│       ├── __init__.py        # Инициализация модуля
+│       ├── app.py             # Главное окно приложения
+│       ├── certificate_dialog.py      # Диалог выбора сертификата
+│       ├── certificate_manager.py     # Менеджер сертификатов
+│       ├── config.py          # Конфигурация и настройки
+│       └── toast.py           # Toast-уведомления
 ├── examples/                  # Примеры шаблонов
 │   ├── template.xml           # Базовый SOAP-шаблон
-│   └── example_rq_1c.xml      # Пример запроса 1С
-├── tests/                     # Тесты (пустая директория)
+│   └── template_custom_id.xml # Шаблон с кастомным Element ID
 ├── docs/                      # Документация
-│   ├── DEVELOPMENT.md         # История разработки
+│   ├── TRANSIT.md             # Актуальное состояние проекта
+│   ├── CHANGELOG.md           # История версий
 │   ├── CRYPTOPRO_COM.md       # Документация COM-интерфейса
-│   └── SMEV.md                # Описание SMEV-трансформации
+│   ├── CLASSES.md             # Структура классов
+│   ├── FILES.md               # Файловая структура
+│   ├── TECH.md                # Технический стек
+│   └── Эталонный алгоритм СМЭВ3 на java.md
+├── dist/                      # Сборки приложения
+│   ├── GIIS-Signer-GUI.exe    # GUI исполняемый файл
+│   ├── GIIS-Signer-CLI.exe    # CLI исполняемый файл
+│   └── README.txt             # Инструкция для пользователей
+├── giis-signer-gui.spec       # Спецификация сборки GUI
+├── giis-signer-cli.spec       # Спецификация сборки CLI
+├── giis-signer-gui.manifest   # Windows manifest для GUI
+├── main_logo.ico              # Иконка приложения
+├── main_logo.svg              # Векторный логотип
 ├── pyproject.toml             # Конфигурация проекта
+├── uv.lock                    # Lockfile зависимостей
 ├── README.md                  # Этот файл
 └── LICENSE                    # Лицензия MIT
 ```
