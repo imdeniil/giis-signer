@@ -19,21 +19,14 @@
 
 ## Безопасность
 
-### VirusTotal Анализ
-Standalone exe-файлы регулярно проверяются на VirusTotal для обеспечения безопасности:
-
-[![VirusTotal Scan](https://img.shields.io/badge/VirusTotal-Clean-success)](https://www.virustotal.com/gui/file-analysis/YzI4NTVhMTJjNGJmYTEwOTg4ZGM4NjY5M2RjMjRiZTI6MTc1OTQwMjg0Nw==)
-
-**Последний анализ:** GIIS-Signer-GUI.exe
-- **Результат:** 0/72 антивирусов обнаружили угрозы
-- **Детали:** [Просмотреть полный отчет](https://www.virustotal.com/gui/file-analysis/YzI4NTVhMTJjNGJmYTEwOTg4ZGM4NjY5M2RjMjRiZTI6MTc1OTQwMjg0Nw==)
-
 Exe-файлы созданы с помощью PyInstaller и содержат:
 - Весь код Python приложения
 - Необходимые библиотеки и зависимости
 - Python runtime
 
 ⚠️ **Важно:** Exe-файлы НЕ содержат и НЕ хранят закрытые ключи. Все криптографические операции выполняются через КриптоПро CSP с использованием сертификатов из хранилища Windows.
+
+**Примечание:** PyInstaller-сборки могут вызывать ложные срабатывания у некоторых антивирусов. Весь исходный код открыт и доступен для проверки в этом репозитории.
 
 ## Связанные репозитории
 
