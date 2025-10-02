@@ -59,10 +59,10 @@ giis-signer = "giis_signer.cli:main"
 giis-signer-gui = "giis_signer.gui.app:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/giis-signer"
-Documentation = "https://github.com/yourusername/giis-signer/blob/master/README.md"
-Repository = "https://github.com/yourusername/giis-signer"
-"Bug Tracker" = "https://github.com/yourusername/giis-signer/issues"
+Homepage = "https://github.com/imdeniil/giis-signer"
+Documentation = "https://github.com/imdeniil/giis-signer/blob/master/README.md"
+Repository = "https://github.com/imdeniil/giis-signer"
+"Bug Tracker" = "https://github.com/imdeniil/giis-signer/issues"
 
 [tool.setuptools]
 packages = ["giis_signer", "giis_signer.gui"]
