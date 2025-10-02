@@ -9,12 +9,12 @@ import re
 from pathlib import Path
 from typing import Optional
 
-from ..cryptopro_signer import CryptoProSigner, CryptoProException
-from ..xml_signer import XMLSigner, XMLSignerException
-from .certificate_manager import CertificateManager, CertificateInfo
-from .certificate_dialog import CertificateDialog
-from .config import Config
-from .toast import ToastManager
+from giis_signer.cryptopro_signer import CryptoProSigner, CryptoProException
+from giis_signer.xml_signer import XMLSigner, XMLSignerException
+from giis_signer.gui.certificate_manager import CertificateManager, CertificateInfo
+from giis_signer.gui.certificate_dialog import CertificateDialog
+from giis_signer.gui.config import Config
+from giis_signer.gui.toast import ToastManager
 
 
 class GIISSignerApp(ctk.CTk):

@@ -9,7 +9,7 @@ from typing import Optional
 
 from xmlcanon import canonicalize_xml
 from smev_transform import Transform as SmevTransform
-from .cryptopro_signer import CryptoProSigner, CryptoProException
+from giis_signer.cryptopro_signer import CryptoProSigner, CryptoProException
 
 
 class XMLSignerException(Exception):

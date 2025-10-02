@@ -4,7 +4,7 @@
 
 import customtkinter as ctk
 from typing import Optional, List
-from .certificate_manager import CertificateInfo, CertificateManager
+from giis_signer.gui.certificate_manager import CertificateInfo, CertificateManager
 
 
 class CertificateDialog(ctk.CTkToplevel):

@@ -8,8 +8,8 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from .cryptopro_signer import CryptoProSigner, CryptoProException
-from .xml_signer import XMLSigner, XMLSignerException
+from giis_signer.cryptopro_signer import CryptoProSigner, CryptoProException
+from giis_signer.xml_signer import XMLSigner, XMLSignerException
 
 
 def extract_element_id(xml_content: str) -> Optional[str]:

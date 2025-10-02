@@ -3,11 +3,11 @@ GUI модуль для GIIS Signer
 Предоставляет графический интерфейс для подписания XML документов
 """
 
-from .app import GIISSignerApp, main
-from .certificate_manager import CertificateManager, CertificateInfo
-from .certificate_dialog import CertificateDialog
-from .config import Config
-from .toast import Toast, ToastManager
+from giis_signer.gui.app import GIISSignerApp, main
+from giis_signer.gui.certificate_manager import CertificateManager, CertificateInfo
+from giis_signer.gui.certificate_dialog import CertificateDialog
+from giis_signer.gui.config import Config
+from giis_signer.gui.toast import Toast, ToastManager
 
 __all__ = [
     "GIISSignerApp",

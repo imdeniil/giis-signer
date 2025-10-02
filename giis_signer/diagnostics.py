@@ -44,7 +44,7 @@ except ImportError:
     print("⚠️  Модуль pywin32 не установлен. Установите: pip install pywin32")
     win32com = None
 
-from .cryptopro_signer import CryptoProSigner
+from giis_signer.cryptopro_signer import CryptoProSigner
 from xmlcanon import canonicalize_xml
 from smev_transform import Transform as SmevTransform
 
